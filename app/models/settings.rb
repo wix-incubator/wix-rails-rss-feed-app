@@ -1,7 +1,7 @@
 class Settings < ActiveRecord::Base
 	self.primary_key = 'key'
 
-  attr_accessible :key, :value
+  attr_accessible :key, :value 
 
 	def self.find_or_create_default(key)
 		begin

@@ -9,7 +9,7 @@ class AppController < ActionController::Base
 
 	def settings  
 		@settings = Settings.find_or_create_default(@key).value.html_safe
-		cookies[:instance] = params[:instance]
+		cookies[:instance] = params[:instance] 
 	end
 
 	def settingsupdate
