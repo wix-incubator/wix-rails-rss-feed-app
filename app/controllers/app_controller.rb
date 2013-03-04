@@ -1,23 +1,19 @@
 class AppController < ActionController::Base
 	
 	before_filter :require_instance
+	before_filter :get_settings_key
 
 	def widget
-		@settings = get_settings_from_db.value.html_safe
+		@settings = Settings.find_or_create_default(@key).value.html_safe
 	end
 
 	def settings  
-		@settings = get_settings_from_db.value.html_safe
+		@settings = Settings.find_or_create_default(@key).value.html_safe
 		cookies[:instance] = params[:instance]
 	end
 
 	def settingsupdate
-		key = get_settings_key
-
-		settings = get_settings_from_db
-		settings.key = key
-		settings.value = params[:settings]
-		settings.save()
+		Settings.update(@key, params[:settings])
 
 		render :json => {}, :status => 200
 	end
@@ -25,26 +21,15 @@ class AppController < ActionController::Base
 	private
 
 	def get_settings_key
-		key = @instance['instanceId'] + ':'
+		@key = @instance['instanceId'] + ':'
 
 		if (params[:origCompId])
-			key = key + params[:origCompId]
+			@key = @key + params[:origCompId]
 		else
-			key = key + params[:compId]
+			@key = @key + params[:compId]
 		end
 		
-		return key 
-	end
-
-	def get_settings_from_db
-		begin
-			key = get_settings_key
-			settings = Settings.find(key)
-		rescue ActiveRecord::RecordNotFound, Exception => e
-		  	settings = Settings.new(:key => '', :value => '{}')
-		end
-
-		return settings
+		return @key 
 	end
 
 	def require_instance
@@ -56,10 +41,10 @@ class AppController < ActionController::Base
 			@instance = cookies[:instance]
 		end
 
-		return validateInstance
+		return validate_instance
 	end
 
-	def validateInstance
+	def validate_instance
 		redirect_to('/invalid-instance') unless !@instance.nil?
 			
 		if (!parse_instance)
@@ -93,7 +78,7 @@ class AppController < ActionController::Base
  			return false
  		end
 	    
-	    return true
+	  return true
 	end
 end
 
