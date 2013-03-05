@@ -28,7 +28,7 @@ This app was developed using the rails scaffolder, so the directory structure is
   |           `-- widget.html.erb       (New)
   |-- config
   |   |-- application.rb                (wix-apps middleware setup - your app secret goes here)  
-  |   `-- routes.rb    					        (Added routes)
+  |   `-- routes.rb                     (Added routes)
   |-- public                            (All New)
   |   |-- 404.html
   |   |-- 500.html
@@ -44,7 +44,7 @@ This app was developed using the rails scaffolder, so the directory structure is
 
 As all other app samples, the app business logic resides in the client side (Javascript) under the Public folder. The server is responsible for validating that requests are arriving from the Wix platform and to store the app instance settings in a simple key-value store.
 
-### Overview
+### Setup
 
 This app uses the wix-apps middleware to handle authentication, make sure you to follow it's <a href="https://github.com/wix/wix-apps-ruby">setup</a> 
 
