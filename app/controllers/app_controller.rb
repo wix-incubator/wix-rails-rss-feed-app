@@ -11,7 +11,6 @@ class AppController < ActionController::Base
   def settings
     value = Settings.find_or_create_by_key(@key).value || '{}'
     @settings = value.html_safe
-    cookies[:instance] = params[:instance]
   end
   
   def settingsupdate
