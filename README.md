@@ -46,7 +46,7 @@ As all other app samples, the app business logic resides in the client side (Jav
 
 ### Setup
 
-This app uses the wix-apps middleware to handle authentication, make sure you to follow it's <a href="https://github.com/wix/wix-apps-ruby">setup</a>
+This app uses the wix-apps middleware to handle authentication, make sure you follow its <a href="https://github.com/wix/wix-apps-ruby">setup</a>
 
 Run the following commands:
 
