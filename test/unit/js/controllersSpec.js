@@ -33,18 +33,24 @@ describe('WidgetCtrl', function(){
 });
 
 describe('SettingsCtrl', function(){
-    var scope, window, settingsService, $httpBackend, settings, wixService;
+    var scope, window, settingsService, settings, wixService, feedService, $httpBackend;
 
     beforeEach(module('rss'));
 
-    beforeEach(inject(function($rootScope, $window, _$httpBackend_, $controller, $q, SettingsService, Settings){
+    beforeEach(inject(function($rootScope, $window, _$httpBackend_, $controller, $q, SettingsService, Settings, FeedService){
         scope = $rootScope.$new();
         settingsService = SettingsService;
         settings = Settings;
+        feedService = FeedService;
         window =  {
             settings : {'numOfEntries':'4', 'feedUrl':'http://rss.cnn.com/rss/edition.rss', connected : false}
         };
+        $httpBackend = _$httpBackend_;
+        var deferred = $q.defer();
+        deferred.resolve({'data': {'responseData': {'feed' : {'entries' : [{'someJSONObject' : {}}], 'title' : 'Feed Title'}}}});
+        spyOn(feedService, 'parseFeed').andReturn(deferred.promise);
         wixService = jasmine.createSpyObj('wixService', ['initialize', 'getOrigCompId', 'refreshAppByCompIds']);
+
         $controller('SettingsCtrl', {$scope: scope, $window: window, SettingsService: settingsService, Settings: settings, WixService : wixService});
     }));
 
@@ -59,7 +65,7 @@ describe('SettingsCtrl', function(){
         expect(wixService.initialize).toHaveBeenCalled();
     });
 
-    it('should set user as connected when user enter feed url', function() {
+    it('should set user as connected when user enters feed url', function() {
         scope.init();
         scope.connect(true);
         expect(scope.settings.connected).toBeTruthy();
@@ -69,5 +75,14 @@ describe('SettingsCtrl', function(){
         scope.init();
         scope.connect(false);
         expect(scope.connected).toBeFalsy();
+    })
+
+    it('should show feed title and description when user is connected', function() {
+        window.settings.connected = true;
+        $httpBackend.when('POST', '/app/settingsupdate?instance=undefined').respond({});
+        scope.init();
+        $httpBackend.flush();
+        scope.$apply();
+        expect(scope.feed).toEqual({'entries' : [{'someJSONObject' : {}}], 'title' : 'Feed Title'});
     })
 });

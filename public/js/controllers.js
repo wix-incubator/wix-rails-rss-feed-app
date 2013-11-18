@@ -3,7 +3,7 @@ angular.module('rss.controllers', []);
 var WidgetCtrl = ['$scope', '$window', 'SettingsService', 'FeedService',
     function ($scope, $window, SettingsService, FeedService) {
         $scope.init = function () {
-            $scope.settings = SettingsService.settings();
+            $scope.settings = SettingsService.settings($window);
             $scope.loadFeed();
         }
 
@@ -15,12 +15,19 @@ var WidgetCtrl = ['$scope', '$window', 'SettingsService', 'FeedService',
         }
     }];
 
-var SettingsCtrl = ['$scope', '$window', 'SettingsService', 'Settings', 'WixService',
-    function ($scope, $window, SettingsService, Settings, WixService) {
+var SettingsCtrl = ['$scope', '$window', 'SettingsService', 'Settings', 'WixService', 'FeedService',
+    function ($scope, $window, SettingsService, Settings, WixService, FeedService) {
         $scope.init = function () {
             WixService.initialize();
-            $scope.settings = SettingsService.settings();
+            $scope.settings = SettingsService.settings($window);
+
             $scope.applySettings();
+
+            if ($scope.settings.connected) {
+                FeedService.parseFeed($scope.settings.feedUrl).then(function (res) {
+                    $scope.feed = res.data.responseData.feed;
+                });
+            }
         }
 
         $scope.applySettings = function() {

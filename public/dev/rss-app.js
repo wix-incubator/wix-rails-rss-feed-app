@@ -3,7 +3,7 @@ angular.module('rss.controllers', []);
 var WidgetCtrl = ['$scope', '$window', 'SettingsService', 'FeedService',
     function ($scope, $window, SettingsService, FeedService) {
         $scope.init = function () {
-            $scope.settings = SettingsService.settings();
+            $scope.settings = SettingsService.settings($window);
             $scope.loadFeed();
         }
 
@@ -15,12 +15,19 @@ var WidgetCtrl = ['$scope', '$window', 'SettingsService', 'FeedService',
         }
     }];
 
-var SettingsCtrl = ['$scope', '$window', 'SettingsService', 'Settings', 'WixService',
-    function ($scope, $window, SettingsService, Settings, WixService) {
+var SettingsCtrl = ['$scope', '$window', 'SettingsService', 'Settings', 'WixService', 'FeedService',
+    function ($scope, $window, SettingsService, Settings, WixService, FeedService) {
         $scope.init = function () {
             WixService.initialize();
-            $scope.settings = SettingsService.settings();
+            $scope.settings = SettingsService.settings($window);
+
             $scope.applySettings();
+
+            if ($scope.settings.connected) {
+                FeedService.parseFeed($scope.settings.feedUrl).then(function (res) {
+                    $scope.feed = res.data.responseData.feed;
+                });
+            }
         }
 
         $scope.applySettings = function() {
@@ -56,15 +63,12 @@ services.factory('FeedService', ['$http', function($http){
 }]);
 
 services.factory('Settings', ['$resource', '$location', function($resource, $location) {
-    return $resource('/app/settingsupdate?instance=' + ($location.search()).instance,
-        {headers: {'Content-Type': 'application/json'}},
-        {}
-    );
+    return $resource('/app/settingsupdate?instance=' + ($location.search()).instance);
 }]);
 
-services.factory("SettingsService", ['$window', function($window) {
+services.factory("SettingsService", function() {
     return {
-        settings : function() {
+        settings : function($window) {
             var settings = $.extend(
                 {'numOfEntries': '4',
                       'feedUrl': 'http://rss.cnn.com/rss/edition.rss',
@@ -74,7 +78,7 @@ services.factory("SettingsService", ['$window', function($window) {
             return settings;
         }
     };
-}]);
+});
 
 services.factory('WixService', function() {
     return {

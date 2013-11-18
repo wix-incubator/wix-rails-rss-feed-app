@@ -9,15 +9,12 @@ services.factory('FeedService', ['$http', function($http){
 }]);
 
 services.factory('Settings', ['$resource', '$location', function($resource, $location) {
-    return $resource('/app/settingsupdate?instance=' + ($location.search()).instance,
-        {headers: {'Content-Type': 'application/json'}},
-        {}
-    );
+    return $resource('/app/settingsupdate?instance=' + ($location.search()).instance);
 }]);
 
-services.factory("SettingsService", ['$window', function($window) {
+services.factory("SettingsService", function() {
     return {
-        settings : function() {
+        settings : function($window) {
             var settings = $.extend(
                 {'numOfEntries': '4',
                       'feedUrl': 'http://rss.cnn.com/rss/edition.rss',
@@ -27,7 +24,7 @@ services.factory("SettingsService", ['$window', function($window) {
             return settings;
         }
     };
-}]);
+});
 
 services.factory('WixService', function() {
     return {
