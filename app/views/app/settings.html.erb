@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="rss" ng-controller="SettingsCtrl" data-ng-init="init()">
 <head>
     <title>Widget Settings &bull; Wix</title>
     <link type="text/css" href="/wix-ui-lib/ui-lib.min.css" rel="stylesheet">
-    <link type="text/css" href="/css/rss.settings.css" rel="stylesheet">
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <link type="text/css" href="/dist/rss-app.min.css" rel="stylesheet">
+
+    <script src="http://sslstatic.wix.com/services/js-sdk/1.22.0/js/Wix.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-resource.min.js"></script>
+    <script src="/dist/rss-app.min.js"></script>
 </head>
 <body>
 
@@ -12,18 +17,18 @@
     <div class="logo">
         <img width="86" src="/wix-ui-lib/images/wix_icon.png" alt="logo"/>
     </div>
-    <div class="loggedOut">
+    <div class="loggedOut" ng-hide="settings.connected">
         <p>This app lets you connect to any RSS feed you would like.</p>
         <div class="login-panel">
             <p class="create-account">Enter your your RSS URL</p><br>
-            <input type="text" name="rss-feed-url" id="rssFeedUrl" placeholder="http://rss.cnn.com/rss/edition.rss"/>
-            <button class="submit btn connect" id="connectBtn">Connect Feed</button>
+            <input type="text" ng-model="settings.feedUrl" id="rssFeedUrl" placeholder="http://rss.cnn.com/rss/edition.rss"/>
+            <button class="submit btn connect" ng-click="connect(true)">Connect Feed</button>
         </div>
     </div>
-    <div class="loggedIn hidden">
-        <p>You are now connected to <a id="feedLink" href="#" target="_blank"></a>.<br/>
+    <div class="loggedIn" ng-show="settings.connected">
+        <p>You are now connected to <a id="feedLink" ng-href="{{settings.feedUrl}}" target="_blank" ng-bind="settings.feedUrl"></a>.<br/>
             <span class="feed-description"></span><br/>
-            <a class="disconnect-account">Disconnect account</a></p>
+            <a class="disconnect-account" ng-click="connect(false)">Disconnect account</a></p>
     </div>
 </header>
 
@@ -36,7 +41,7 @@
             <p>Please insert number of feed entries you would like to be displayed</p>
             <ul class="list">
                 <li>
-                    <input id="numOfEntries" class="input-number" type="number" min="1" max="100" step="1" />
+                    <input ng-model="settings.numOfEntries" class="input-number" type="number" min="1" max="100" step="1" />
                 </li>
             </ul>
         </div>
@@ -66,20 +71,11 @@
     </div>
 </div>
 
-<!-- Wix SDK -->
-<script src="http://sslstatic.wix.com/services/js-sdk/1.22.0/js/Wix.js"></script>
-<!-- jQuery Dependency -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 <!-- Wix UI -->
 <script type="text/javascript" src="/wix-ui-lib/ui-lib.min.js"></script>
 
-
-<!-- Settings View Logic -->
-<script type="text/javascript" src="/js/common.js"></script>
-<script type="text/javascript" src="/js/rss.settings.js"></script>
-
 <script type="text/javascript">
-    var newSettings = <%= @settings %>;
+    var settings = <%= @settings %>;
 </script>
 
 </body>
