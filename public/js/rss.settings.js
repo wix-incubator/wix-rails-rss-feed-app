@@ -3,7 +3,7 @@
  * Init the input  with a start value, a one that was saved in the DB or a default one
  */
 function initInputElms() {
-    $('#numOfEntries').val(rssModel.settings.styling.numOfEntries);
+    $('#numOfEntries').val(rssModel.settings.numOfEntries);
 }
 
 /**
