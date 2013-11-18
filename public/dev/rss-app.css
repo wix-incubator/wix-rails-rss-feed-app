@@ -1,11 +1,11 @@
-#feedSignIn .feed-label {
+body.settings #feedSignIn .feed-label {
     margin: 10px 0 5px;
     color: #444;
     font-style: italic;
     display: block;
 }
 
-#rssFeedUrl {
+body.settings #rssFeedUrl {
     outline:0;
     width: 413px;
     line-height: 28px;
@@ -16,16 +16,16 @@
     margin: 0 0 5px 0;
 }
 
-#rssFeedUrl:hover {
+body.settings #rssFeedUrl:hover {
     border-color: #a3d9f6;
 }
 
-#rssFeedUrl:focus {
+body.settings #rssFeedUrl:focus {
     border-color: #19a0e9;
     cursor:text;
 }
 
-.input-number {
+body.settings .input-number {
     width: 5em;
     margin:0 0 5px 0;
     padding: 0 3px;
@@ -37,10 +37,10 @@
     box-shadow: 0 1px 1px 0 rgba(0,0,0,0.3);
 }
 
-.input-number:hover {
+body.settings .input-number:hover {
     border-color: #a3d9f6;
 }
-.input-number:focus {
+body.settings .input-number:focus {
     border-color: #19a0e9;
 }
 body, html {
@@ -50,16 +50,16 @@ body, html {
     padding: 0;
 }
 
-a {
+body.widget a {
     text-decoration: none !important;
     color: #444;
 }
 
-li {
+body.widget li {
     list-style: none;
 }
 
-.main-title {
+body.widget .main-title {
     text-align: center;
     margin:0;
     line-height: 60px;
@@ -68,13 +68,13 @@ li {
 }
 
 
-.feed {
+body.widget .feed {
     border-bottom: 1px solid #ddd;
     padding: 10px;
     margin: 10px;
 }
 
-.widget-body {
+body.widget .widget-body {
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -83,13 +83,13 @@ li {
     vertical-align: middle;
 }
 
-.widget-header {
+body.widget .widget-header {
     overflow: hidden;
     margin-bottom: 10px;
     height: 50px;
 }
 
-.feed-container {
+body.widget .feed-container {
     box-shadow: #888 0 0 10px;
     border: 1px solid #fff;
     background-color: #f8f8f8;
@@ -99,12 +99,12 @@ li {
     margin: 10px;
 }
 
-.overview{
+body.widget .overview{
     overflow-y: auto;
     position: relative !important;
 }
 
-.feed:hover {
+body.widget .feed:hover {
     background: #fff;
     opacity: 0.5;
     box-shadow: #ddd 0 0 10px;
@@ -114,13 +114,13 @@ li {
     border-bottom-color: transparent;
 }
 
-.feed .title {
+body.widget .feed .title {
     font-size: 13px;
     line-height: 20px;
     font-weight:bold;
 }
 
-.feed .content p {
+body.widget .feed .content p {
     font-size: 12px;
     line-height: 18px;
     font-style: italic;

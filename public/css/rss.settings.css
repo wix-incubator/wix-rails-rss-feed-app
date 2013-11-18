@@ -1,11 +1,11 @@
-#feedSignIn .feed-label {
+body.settings #feedSignIn .feed-label {
     margin: 10px 0 5px;
     color: #444;
     font-style: italic;
     display: block;
 }
 
-#rssFeedUrl {
+body.settings #rssFeedUrl {
     outline:0;
     width: 413px;
     line-height: 28px;
@@ -16,16 +16,16 @@
     margin: 0 0 5px 0;
 }
 
-#rssFeedUrl:hover {
+body.settings #rssFeedUrl:hover {
     border-color: #a3d9f6;
 }
 
-#rssFeedUrl:focus {
+body.settings #rssFeedUrl:focus {
     border-color: #19a0e9;
     cursor:text;
 }
 
-.input-number {
+body.settings .input-number {
     width: 5em;
     margin:0 0 5px 0;
     padding: 0 3px;
@@ -37,9 +37,9 @@
     box-shadow: 0 1px 1px 0 rgba(0,0,0,0.3);
 }
 
-.input-number:hover {
+body.settings .input-number:hover {
     border-color: #a3d9f6;
 }
-.input-number:focus {
+body.settings .input-number:focus {
     border-color: #19a0e9;
 }

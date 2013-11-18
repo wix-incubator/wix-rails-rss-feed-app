@@ -11,7 +11,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-resource.min.js"></script>
     <script src="/dist/rss-app.min.js"></script>
 </head>
-<body>
+<body class="settings">
 
 <header class="box">
     <div class="logo">
@@ -26,8 +26,8 @@
         </div>
     </div>
     <div class="loggedIn" ng-show="settings.connected">
-        <p>You are now connected to <a id="feedLink" ng-href="{{settings.feedUrl}}" target="_blank" ng-bind="settings.feedUrl"></a>.<br/>
-            <span class="feed-description"></span><br/>
+        <p>You are now connected to <a id="feedLink" ng-href="{{settings.feedUrl}}" target="_blank" ng-bind="feed.title"></a>.<br/>
+            <span class="feed-description" ng-bind="feed.description"></span><br/>
             <a class="disconnect-account" ng-click="connect(false)">Disconnect account</a></p>
     </div>
 </header>
